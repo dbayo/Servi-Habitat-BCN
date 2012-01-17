@@ -1,0 +1,68 @@
+
+<ul>
+	<li style="display: inline-block;"><a href="#" onclick="searchExp();"  data-role="button" data-theme="b">BUSCAR</a></li>
+</ul>
+<table>
+	<tr>
+		<td><span><b>Nº Expediente : </b></span></td>
+		<td><%= text_field_tag 'numExp' %></td>
+	</tr>
+	<tr>
+		<td><span><b>Referen. Cia. : </b></span></td>
+		<td><%= text_field_tag 'refCia' %></td>
+	</tr>
+	<tr>
+		<td><span><b>Compañia : </b></span></td>
+		<td><%= text_field_tag 'compania' %></td>
+	</tr>
+	<tr>
+		<td><span><b>Cia. Proced. : </b></span></td>
+		<td><%= text_field_tag 'ciaProc' %></td>
+	</tr>
+	<tr>
+		<td><span><b>Nombre : </b></span></td>
+		<td><%= text_field_tag 'nombre' %></td>
+	</tr>
+	<tr>
+		<td><span><b>Apellido 1 : </b></span></td>
+		<td><%= text_field_tag 'apellido1' %></td>
+	</tr>
+</table>
+
+<script>
+	function searchExp() {
+		var url = '?'
+		if ($("#numExp").val() != '') {
+			url = url + 'expedient[id]=' + $("#numExp").val() + '&';
+		}
+		if ($("#refCia").val() != '') {
+			url = url + 'expedient[refCia]=' + $("#refCia").val() + '&';
+		}
+		if ($("#compania").val() != '') {
+			url = url + 'expedient[compania]=' + $("#compania").val() + '&';
+		}
+		if ($("#ciaProc").val() != '') {
+			url = url + 'expedient[ciaProced]=' + $("#ciaProc").val() + '&';
+		}
+		if ($("#nombre").val() != '') {
+			url = url + 'expedient[nombre]=' + $("#nombre").val() + '&';
+		}
+		if ($("#apellido1").val() != '') {
+			url = url + 'expedient[apellido1]=' + $("#apellido1").val() + '&';
+		}
+		
+		$.getJSON('/expedients/renderSearch' + url, function(data) {
+			var out = ''
+			out += '<div data-role="collapsible-set" data-content-theme="d">';
+		  $.each(data, function(i,item){
+					out += '<div data-role="collapsible" data-theme="e" data-content-theme="d" class="ui-btn-down-c"><h3>Expediente numero : '+item.id+'</h3><p>Hola</p><a href="/expedients/'+item.id+'/edit" target="_blank" data-role="button" data-theme="b">Ver exp</a></div>';
+			});
+			out += '</div>';
+			$("#submenu").html(out);
+			
+			$( "div[data-role=page][id=header]" ).page( "destroy" ).page();
+			
+		});
+		
+	}	
+</script>

@@ -1,0 +1,44 @@
+<h1>Listing gremios</h1>
+
+<table>
+  <tr>
+    <th>Gremio</th>
+    <th>Prof</th>
+    <th>Finprev</th>
+    <th>Hora</th>
+    <th>Fechafin</th>
+    <th>Hfin</th>
+    <th>Conformeaseg</th>
+    <th>Descripcion</th>
+    <th>Iva</th>
+    <th>Destfact</th>
+    <th>Facturada</th>
+    <th>Albaranada</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @gremios.each do |gremio| %>
+  <tr>
+    <td><%= gremio.gremio %></td>
+    <td><%= gremio.prof %></td>
+    <td><%= gremio.finPrev %></td>
+    <td><%= gremio.Hora %></td>
+    <td><%= gremio.FechaFin %></td>
+    <td><%= gremio.HFin %></td>
+    <td><%= gremio.conformeAseg %></td>
+    <td><%= gremio.descripcion %></td>
+    <td><%= gremio.iva %></td>
+    <td><%= gremio.destFact %></td>
+    <td><%= gremio.facturada %></td>
+    <td><%= gremio.albaranada %></td>
+    <td><%= link_to 'Edit', edit_expedient_gremio_path(@expedient, gremio) %></td>
+    <td><%= link_to 'Destroy', expedient_gremio_path(@expedient, gremio), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Gremio', new_expedient_gremio_path %>

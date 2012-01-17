@@ -1,0 +1,67 @@
+<%= form_for [@expedient, @gremio] do |f| %>
+	<ul>
+		<li style="display: inline-block;"><%= link_to 'Atras', expedient_path(@expedient), :class => "button" %></li>
+		<li style="display: inline-block;"><%= link_to_function "Actualizar", "javascript:$('.edit_gremio').submit(); return false;", :class => "button" %></li>
+		<li style="display: inline-block;"><%= link_to '+ Gremio', new_expedient_gremio_path(@expedient), :class => "button" %></li>
+	</ul>
+  <% if @gremio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gremio.errors.count, "error") %> prohibited this gremio from being saved:</h2>
+
+      <ul>
+      <% @gremio.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :gremio %><br />
+    <%= f.text_field :gremio %>
+  </div>
+  <div class="field">
+    <%= f.label :prof %><br />
+    <%= f.text_field :prof %>
+  </div>
+  <div class="field">
+    <%= f.label :finPrev %><br />
+    <%= f.date_select :finPrev %>
+  </div>
+  <div class="field">
+    <%= f.label :Hora %><br />
+    <%= f.time_select :Hora %>
+  </div>
+  <div class="field">
+    <%= f.label :FechaFin %><br />
+    <%= f.date_select :FechaFin %>
+  </div>
+  <div class="field">
+    <%= f.label :HFin %><br />
+    <%= f.time_select :HFin %>
+  </div>
+  <div class="field">
+    <%= f.label :conformeAseg %><br />
+    <%= f.check_box :conformeAseg %>
+  </div>
+  <div class="field">
+    <%= f.label :descripcion %><br />
+    <%= f.text_area :descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :iva %><br />
+    <%= f.number_field :iva %>
+  </div>
+  <div class="field">
+    <%= f.label :destFact %><br />
+    <%= f.text_field :destFact %>
+  </div>
+  <div class="field">
+    <%= f.label :facturada %><br />
+    <%= f.check_box :facturada %>
+  </div>
+  <div class="field">
+    <%= f.label :albaranada %><br />
+    <%= f.check_box :albaranada %>
+  </div>
+<% end %>

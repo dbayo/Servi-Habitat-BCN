@@ -1,0 +1,23 @@
+<table>
+  <tr>
+		<th></th>
+    <th>HOY</th>
+    <th>AYER</th>
+  </tr>
+
+	<tr>
+		<td>ABIERTOS</td>
+		<td><%= Expedient.where(" created_at between ? AND ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day ).count%></td>
+		<td><%= Expedient.where(" created_at between ? AND ?", (Date.today - 1).strftime('%Y-%m-%d 00:00:00'), (Date.today - 1).strftime('%Y-%m-%d 23:59:59') ).count%></td>
+	</tr>
+	
+	<tr>
+		<td>FACTURADOS</td>
+		<td><%= Expedient.where(" created_at between ? AND ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day ).count%></td>
+		<td><%= Expedient.where(" created_at between ? AND ?", (Date.today - 1).strftime('%Y-%m-%d 00:00:00'), (Date.today - 1).strftime('%Y-%m-%d 23:59:59') ).count%></td>
+	</tr>
+</table>
+
+<br />
+
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ferran</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+	
+	<style>
+		.min-width-480px .ui-select { width: 100%; }
+	</style>
+	
+	<script>
+		$(document).bind("mobileinit", function(){
+		  $.mobile.pushStateEnabled = false;
+		});
+	</script>
+</head>
+	<body>
+	<!-- Start of first page -->
+	<div data-role="page" id="header">
+
+		<div data-role="header">
+			<h1>
+				<%= link_to 'Nuevo', new_expedient_path, :'data-role' => "button", :'data-theme'=>"b", :rel => "external" %>
+				<a href="/expedients" id="newTemplateSubmit" data-role="button" data-theme="b" rel="external">Principal</a>
+				<a href="/expedients/search" id="newTemplateSubmit" data-role="button" data-theme="b" rel="external">Buscar Exp.</a>			
+			</h1>
+		</div><!-- /header -->
+
+		<div data-role="content">	
+			<div class="ui-grid-a">
+				<!-- MENU -->
+				<div class="ui-block-a">			
+						<div data-role="header" data-theme="d"><h1><%= @menuTitle%></h1></div> 
+						<div data-role="content"><%= yield %></div>  
+				</div>
+				
+				<!-- SUBMENU -->
+				<div class="ui-block-b">
+						<div data-role="header" data-theme="d"><h1>Results</h1></div>
+						<div data-role="content" id="submenu"></div> 
+				</div>
+			</div><!-- /grid-a -->
+		</div><!-- /content -->
+	</div><!-- /page -->
+	
+	<div data-role="page" data-url="dialog.html"  data-rel="back" rel="external">
+	    <div data-role="header">
+	        <h1>Nuevo perjudicado</h1>
+	    </div>
+	    <div data-role="content">
+					<table>
+						<tr>
+							<td><span><b>Nombre :</b></span></td>
+							<td><input name="perjudicado[nombre]" placeholder="Nombre" size="30" type="tel" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c"></td>
+						</tr>
+						<tr>
+							<td><span><b>Direccion :</b></span></td>
+							<td><input name="perjudicado[direccion]" placeholder="Direccion" size="30" type="tel" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c"></td>
+						</tr>
+						<tr>
+							<td><span><b>Telefono 1 :</b></span></td>
+							<td><input name="perjudicado[telefono1]" placeholder="Telefono 1" size="30" type="tel" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c"></td>
+						</tr>
+						<tr>
+							<td><span><b>Telefono 2 :</b></span></td>
+							<td><input name="perjudicado[telefono2]" placeholder="Telefono 2" size="30" type="tel" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c"></td>
+						</tr>
+						<tr>
+							<td><span><b>Descripcion :</b></span></td>
+							<td><input name="perjudicado[descripcion]" placeholder="Descripcion" size="30" type="tel" class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c"></td>
+						</tr>
+					</table>
+					
+	        <p></p>
+	    </div>
+	</div>
+	
+	<script>
+		$( "div[data-role=page][id=header]" ).page( "destroy" ).page();
+	</script>
+
+</body>
+</html>

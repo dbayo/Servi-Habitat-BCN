@@ -1,0 +1,193 @@
+<%= form_for(@expedient) do |f| %>
+	<ul>
+		<li style="display: inline-block;"><%= link_to_function "Crear", "javascript:document.getElementById(\"new_expedient\").submit(); return false;", :'data-role' => "button", :'data-theme'=>"b" %></li>
+	</ul>
+  	<% if @expedient.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@expedient.errors.count, "error") %> prohibited this expedient from being saved:</h2>
+
+      		<ul>
+      			<% @expedient.errors.full_messages.each do |msg| %>
+        			<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+
+	<table>
+		<tr>
+			<td><span><b>Nº exp.:</b></span></td>
+			<td><span><%= @expedient.id unless @expedient.nil?%></span></td>
+			<td><span><b>Apertura:</b></span></td>
+			<td><span><%= @expedient.created_at unless @expedient.nil?%></span></td>
+			<td><span><b>Estado:</b></span></td>
+			<td><span><%= select :expedient, :estado, ['Abierto', 'Cerrado','Nulo','Terminado','Facturado'] %></span></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<td colspan="4"><h3>Datos de la Compañia Asist./Aseg.</h3></td>
+		</tr>
+		<tr>
+			<td><span>Compañía:</span></td>
+			<td colspan="3"><div class="field"><%= select :expedient, :compania, ['Generali','Particular'] %></div></td>
+		</tr>
+		<tr>
+			<td><span>Ref. Cía:</span></td>
+			<td><div class="field"><%= f.number_field :refCia %></div></td>
+		</tr>
+		<tr>
+			<td><span>Tlf. Cía:</span></td>
+			<td><div class="field"><%= f.telephone_field :tlfCia %></div></td>
+		</tr>
+		<tr>
+			<td><span>Contacto:</span></td>
+			<td colspan="2"><div class="field"><%= f.text_field :contacto %></div></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<td colspan="2"><h3>Compañía de Procedencia</h3></td>
+		</tr>
+		<tr>
+			<td><span>Cia. Proced:</span></td>
+			<td><div class="field"><%= select :expedient, :ciaProced, ['Hogar','Comunidad','Comercio'] %></div></td>
+		</tr>
+		<tr>
+			<td><span>Nº de Póliza:</span></td>
+			<td><div class="field"><%= f.number_field :numPoliza %></div></td>
+		</tr>
+		<tr>
+			<td><span>Nº de Ref.:</span></td>
+			<td><div class="field"><%= f.number_field :numRef %></div></td>
+		</tr>
+	</table>
+	
+	<h3>Datos Asegurado</h3>
+	
+	<span>Nombre:</span>
+	<div class="ui-grid-b">
+		<div class="ui-block-a"><%= f.text_field :nombre, :placeholder => "Nombre", :style => "width: 92%;"%></div>
+		<div class="ui-block-b"><%= f.text_field :apellido1, :placeholder => "Apellido 1", :style => "width: 92%;" %></div>
+		<div class="ui-block-c"><%= f.text_field :apellido2, :placeholder => "Apellido 2", :style => "width: 92%;" %></div>
+	</div><!-- /grid-b -->
+
+	<h5>Domicilio:</h5><br>
+	<div class="ui-grid-c">
+		<div class="ui-block-a" style = "margin-top: -7px; width: 25%;"><%= f.select :calle,
+		['',
+		'Avenida',
+		'Bulevar',
+		'Calle',
+		'Carrer',
+		'Camino',
+		'Carretera',
+		'Glorieta',
+		'Paseo',
+		'Plaza',
+		'Pasaje',
+		'Rambla',
+		'Ronda',
+		'Sector',
+		'Travesía' ]%>
+		</div>
+		<div class="ui-block-b" style = " width: 45%;"><%= f.text_field :domicilio, :placeholder => "Domicilio" %></div>
+		<div class="ui-block-c" style = " padding-left: 5px; margin-right: -5px; width: 15%;"><%= f.text_field :numero, :placeholder => "Numero", :style => "width: 90%;"%></div>
+		<div class="ui-block-d" style = " padding-left: 10px; margin-right: -10px; width: 15%;"><%= f.text_field :piso, :placeholder => "Piso", :style => "width: 80%;" %></div>
+	</div><!-- /grid-b -->
+
+	<div><%= f.text_field :localidad, :placeholder => "Localidad" %><%= f.text_field :poblacion, :placeholder => "Poblacion" %></div>
+	<div><%= f.text_field :cPostal, :placeholder => "Codigo Postal", :style => "width: 50px;" %></div>
+	
+	<br>
+	<span>Contacto :</span>
+	<div class="field"><%= f.text_field :contactoAsegurado %></div>
+	
+	<br>
+	<span>NIF :</span>
+	<div class="field"><%= f.text_field :nif %></div>
+	
+	<br>
+	<span>Telefonos :</span>
+	<div class="field"><%= f.telephone_field :tlf1, :placeholder => "Telefono 1" %><%= f.telephone_field :tlf2, :placeholder => "Telefono 2" %></div>
+	
+	<br>
+	<span>Descripcion :</span>
+	<div class="field"><%= f.text_area :descripcion %></div>
+	
+	<table>
+		<tr>
+			<td><%= f.check_box :urgente %></td>
+			<td><label style="color:red" for="expedient_urgente">Urgente</label></td>
+			<td><%= f.check_box :perito, :onchange => "showPeritoName('expedient_peritoName', $('#'+id)[0].checked)"%></td>
+			<td><label for="expedient_perito">Perito</label></td>
+			<td style="display:none;"><%= select :expedient, :peritoName, ['PeritoA','PeritoB'] %></td>
+			<td><%= f.check_box :esteticos, :onchange => "showEsteticosName('expedient_esteticosName', $('#'+id)[0].checked)" %></td>
+			<td style="display:none;"><%= f.text_field :esteticosName, :style => "width: 50px;" %></td>
+			<td><label for="expedient_esteticos">Esteticos</label></td>
+		</tr>
+	</table>
+	
+	<script>
+		//Show PeritoName selectBox
+		function showPeritoName(id, status) {
+			if (status == true) { 
+				$('#'+id).parent().parent().parent().css('display','block'); 
+			} else {
+				$('#'+id).parent().parent().parent().css('display','none'); 
+			}
+		}
+		
+		//Show PeritoName Input
+		function showEsteticosName(id, status) {
+			if (status == true) { 
+				$('#'+id).parent().css('display','block'); 
+			} else {
+				$('#'+id).parent().css('display','none'); 
+			}
+		}
+	</script>
+	
+	<table>
+		<tr>
+			<td><%= f.check_box :franquicia %></td>
+			<td><label for="expedient_franquicia">Franquicia</label></td>
+			<td><div class="field"><%= f.text_field :valorFranquicia, :style => "width: 60px;" %></div></td>
+			<td><label for="expedient_maxAuto">Máx. Auto.:</label></td>
+			<td><div class="field"><%= f.number_field :maxAuto, :maxlenght => 4, :style => "width: 60px;" %></div></td>
+		</tr>		
+	</table>
+	<table>
+		<tr>
+			<td><span>Daños por:</span></td>
+			<td><div class="field"><%= select :expedient, :danos, ['AGUA','ROBO','INCENDIO','LOZA','OTROS'] %></div></td>
+			<td><span>Categoria:</span></td>
+			<td><div class="field"><%= select :expedient, :categoria, ['PRINCIPAL','PRINCIPAL CON TERCEROS'] %></div></td>
+		</tr>
+	</table>
+	<a href="dialog.html" data-transition="slidedown" data-theme="c" data-role="button" data-inline="true" data-rel="dialog">Open dialog</a>
+	
+	<table>
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<td><span>D. Fact.:</span></td>
+			<td><div class="field"><%= select :expedient, :dFact, ['ASEGURADO'] %></div></td>
+			<td><span>Tipo:</span></td>
+			<td><div class="field"><%= select :expedient, :tipo, ['ASISTENCIA','NULO','PARTICULAR','SINIESTRO'] %></div></td>
+		</tr>
+	</table>
+<% end %>
+
+<script>
+	// Si cambias Ref Cia que copie el campo en Num Ref
+	$("#expedient_refCia").blur(function() {
+		$("#expedient_numRef").attr('value',$("#expedient_refCia").attr('value'));
+	});
+</script>

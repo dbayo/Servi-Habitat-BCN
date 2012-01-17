@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  gremio: MyString
+  prof: MyString
+  finPrev: 2011-12-18
+  Hora: 2011-12-18 17:29:43
+  FechaFin: 2011-12-18
+  HFin: 2011-12-18 17:29:43
+  conformeAseg: false
+  descripcion: MyText
+  iva: 1
+  destFact: MyString
+  facturada: false
+  albaranada: false
+
+two:
+  gremio: MyString
+  prof: MyString
+  finPrev: 2011-12-18
+  Hora: 2011-12-18 17:29:43
+  FechaFin: 2011-12-18
+  HFin: 2011-12-18 17:29:43
+  conformeAseg: false
+  descripcion: MyText
+  iva: 1
+  destFact: MyString
+  facturada: false
+  albaranada: false
