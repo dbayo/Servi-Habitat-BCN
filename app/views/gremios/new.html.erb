@@ -15,11 +15,28 @@
     </div>
   <% end %>
 
-   	<h5>Gremio</h5>
-		<%= f.select :gremio, ['Fontaneria','Albañileria','Pintura','Electricidad','Limpieza','Camion cuba','Parquet','Metalista','Carpinteria','Pavimentos continuos'] %>
-
-    <h5>Profesional</h5>
-    <%= f.text_field :prof %>
+	<table style="width: 100%;">
+		<tr>
+			<td><span>Direccion : </span></td>
+			<td colspan="3" style="width: 80%;">
+				<select id="post_person_id" name="post[person_id]">
+					<option><%= @expedient.nombre %></option>
+					<% Perjudicado.where(:expedient_id => params[:id]).each do |perjudicado| %>
+						<option><%= perjudicado.nombre %></option>
+					<% end %>
+				</select>
+		</tr>
+		<tr>
+			<td><span>Gremio :</span></td>
+			<td><div class="field"><%= f.select :gremio, ['Fontaneria','Albañileria','Pintura','Electricidad','Limpieza','Camion cuba','Parquet','Metalista','Carpinteria','Pavimentos continuos'] %></div></td>
+			<td><span>Profesional :</span></td>
+			<td><div class="field"><%= f.text_field :prof, :style => "width: 90%;" %></div></td>
+		</tr>
+	</table>
+	
+	<table>
+		
+	</table>
 
 		<div class="ui-grid-b">
 			<div class="ui-block-a" style="width:10%; "><h5>Fin prevista</h5></div>
@@ -367,27 +384,24 @@
 
   
   <div class="field">
-    <%= f.label :conformeAseg %><br />
-    <%= f.check_box :conformeAseg %>
-  </div>
-  <div class="field">
     <%= f.label :descripcion %><br />
-    <%= f.text_area :descripcion %>
+    <%= f.text_area :descripcion, :style => "width:100%;" %>
   </div>
-  <div class="field">
-    <%= f.label :iva %><br />
-    <%= f.number_field :iva %>
-  </div>
-  <div class="field">
-    <%= f.label :destFact %><br />
-    <%= f.text_field :destFact %>
-  </div>
-  <div class="field">
-    <%= f.label :facturada %><br />
-    <%= f.check_box :facturada %>
-  </div>
-  <div class="field">
-    <%= f.label :albaranada %><br />
-    <%= f.check_box :albaranada %>
-  </div>
+
+
+	<table style="width:100%;">
+		<tr>
+			<td><span>IVA(%) :</span></td>
+			<td style="width:40%;">
+				<select id="gremio_iva" name="gremio[iva]">
+					<option value="18">18</option>
+					<option value="8">8</option>
+					<option value="0">0</option>
+				</select>
+			</td>
+			<td><%= f.label :facturada %><%= f.check_box :facturada %></td>
+			<td><input type="checkbox" id="gremio_albaranada" name="gremio[albaranada]" value="yes" /><label for="gremio_albaranada">Cobrada</label></td>
+		</tr>
+	</table>
+
 <% end %>

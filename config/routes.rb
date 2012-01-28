@@ -3,6 +3,7 @@ Ferran::Application.routes.draw do
 
   # AJAX
   match 'expedients/renderSearch' => 'expedients#renderSearch'
+  match 'expedients/addPerjudicado' => 'expedients#addPerjudicado'
   
   match 'expedients/search' => 'expedients#search'
   resources :expedients do

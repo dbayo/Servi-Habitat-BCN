@@ -100,4 +100,10 @@ class ExpedientsController < ApplicationController
 
     render :json => @expedient
   end
+  
+  def addPerjudicado
+    @perjudicado = Perjudicado.create(:nombre => params[:perjudicado][:nombre], :direccion => params[:perjudicado][:direccion], :telefono1 => params[:perjudicado][:telefono1], :telefono2 => params[:perjudicado][:telefono2], :descripcion => params[:perjudicado][:descripcion], :expedient_id => params[:expedient_id])
+
+    render :json => @perjudicado
+  end
 end

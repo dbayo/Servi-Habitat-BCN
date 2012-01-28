@@ -1,7 +1,7 @@
 <%= form_for(@expedient) do |f| %>
 	<ul>
-		<li style="display: inline-block;"><%= link_to_function "Guardar", "$('.edit_expedient').submit(); return false;", :'data-role' => "button", :'data-theme'=>"b"%></li>
-		<li style="display: inline-block;"><%= link_to '+ Gremio', new_expedient_gremio_path(@expedient), :'data-role' => "button", :'data-inline'=>"true" %></li>
+		<li style="display: inline-block;"><%= link_to_function "Guardar", "$('.edit_expedient').submit(); return false;", :'data-role' => "button", :'data-theme'=>"b", :rel => "external"%></li>
+		<li style="display: inline-block;"><%= link_to '+ Gremio', new_expedient_gremio_path(@expedient), :'data-role' => "button", :'data-inline'=>"true", :rel => "external" %></li>
 	</ul>
   	<% if @expedient.errors.any? %>
     	<div id="error_explanation">
@@ -122,12 +122,35 @@
 			<tr>
 				<td><%= f.check_box :urgente %></td>
 				<td><label style="color:red" for="expedient_urgente">Urgente</label></td>
-				<td><%= f.check_box :perito %></td>
+				<td><%= f.check_box :perito, :onchange => "showPeritoName('expedient_peritoName', $('#'+id)[0].checked)"%></td>
 				<td><label for="expedient_perito">Perito</label></td>
-				<td><%= f.check_box :esteticos %></td>
+				<td style="display:none;"><%= select :expedient, :peritoName, ['PeritoA','PeritoB'] %></td>
+				<td><%= f.check_box :esteticos, :onchange => "showEsteticosName('expedient_esteticosName', $('#'+id)[0].checked)" %></td>
+				<td style="display:none;"><%= f.text_field :esteticosName, :style => "width: 50px;" %></td>
 				<td><label for="expedient_esteticos">Esteticos</label></td>
 			</tr>
 		</table>
+
+		<script>
+			//Show PeritoName selectBox
+			function showPeritoName(id, status) {
+				if (status == true) { 
+					$('#'+id).parent().parent().parent().css('display','block'); 
+				} else {
+					$('#'+id).parent().parent().parent().css('display','none'); 
+				}
+			}
+
+			//Show PeritoName Input
+			function showEsteticosName(id, status) {
+				if (status == true) { 
+					$('#'+id).parent().css('display','block'); 
+				} else {
+					$('#'+id).parent().css('display','none'); 
+				}
+			}
+		</script>
+
 		<table>
 			<tr>
 				<td><%= f.check_box :franquicia %></td>
@@ -141,19 +164,84 @@
 			<tr>
 				<td><span>Daños por:</span></td>
 				<td><div class="field"><%= select :expedient, :danos, ['AGUA','ROBO','INCENDIO','LOZA','OTROS'] %></div></td>
-				<td><span>Categoria:</span></td>
-				<td><div class="field"><%= select :expedient, :categoria, ['PRINCIPAL','PRINCIPAL CON TERCEROS'] %></div></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
 				<td><span>D. Fact.:</span></td>
 				<td><div class="field"><%= select :expedient, :dFact, ['ASEGURADO'] %></div></td>
 				<td><span>Tipo:</span></td>
 				<td><div class="field"><%= select :expedient, :tipo, ['ASISTENCIA','NULO','PARTICULAR','SINIESTRO'] %></div></td>
 			</tr>
 		</table>
+
+		<table>
+			<tr>
+				<td><span>Categoria:</span></td>
+				<td><div class="field"><%= select :expedient, :categoria, ['PRINCIPAL','PRINCIPAL CON TERCEROS'] %></div></td>
+			</tr>
+		</table>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Direccion</th>
+					<th>Telefono 1</th>
+					<th>Telefono 2</th>
+					<th>Descripcion</th>
+				</tr>
+			</thead>
+			<tbody id="tablePerjudicados" style="text-align: center;">
+				<% @expedient.perjudicados.order("created_at DESC").each do |perjudicado| %>
+					<tr>
+						<td><%= perjudicado.nombre %></td>
+						<td><%= perjudicado.direccion %></td>
+						<td><%= perjudicado.telefono1 %></td>
+						<td><%= perjudicado.telefono2 %></td>
+						<td><%= perjudicado.descripcion %></td>
+					</tr>
+				<% end %>
+				<tr>
+					<td><%= text_field_tag 'perjudicado[nombre]', nil, :placeholder => 'Nombre', :style => "width: 90%" %></td>
+					<td><%= text_field_tag 'perjudicado[direccion]', nil, :placeholder => 'Direccion', :style => "width: 90%" %></td>
+					<td><%= text_field_tag 'perjudicado[telefono1]', nil, :placeholder => 'Telefono 1', :style => "width: 90%" %></td>
+					<td><%= text_field_tag 'perjudicado[telefono2]', nil, :placeholder => 'Telefono 2', :style => "width: 90%" %></td>
+					<td><%= text_field_tag 'perjudicado[descripcion]', nil, :placeholder => 'Descripcion', :style => "width: 90%" %></td>
+				</tr>	
+			</tbody>
+		</table>
 	<% end %>
+<a id="addPerjudicado" href="#" data-role="button" data-theme="b">+ Perjudicado</a>
+
+<script>
+	$('#addPerjudicado').click(function() {
+	    var url = '?'
+			if ($("#perjudicado_nombre").val() != '') {
+				url = url + 'perjudicado[nombre]=' + $("#perjudicado_nombre").val() + '&';
+			}
+			if ($("#perjudicado_direccion").val() != '') {
+				url = url + 'perjudicado[direccion]=' + $("#perjudicado_direccion").val() + '&';
+			}
+			if ($("#perjudicado_telefono1").val() != '') {
+				url = url + 'perjudicado[telefono1]=' + $("#perjudicado_telefono1").val() + '&';
+			}
+			if ($("#perjudicado_telefono2").val() != '') {
+				url = url + 'perjudicado[telefono2]=' + $("#perjudicado_telefono2").val() + '&';
+			}
+			if ($("#perjudicado_descripcion").val() != '') {
+				url = url + 'perjudicado[descripcion]=' + $("#perjudicado_descripcion").val() + '&';
+			}
+			url = url + 'expedient_id=' + <%= @expedient.id %> + '&';
+			
+			jQuery.ajax({ 
+				url: '/expedients/addPerjudicado' + url,
+				dataType: "json",
+			  success: function(data, textStatus) {
+					out = '<tr><td>'+ data.nombre +'</td><td>'+ data.direccion +'</td><td>'+ data.telefono1 +'</td><td>'+ data.telefono2 +'</td><td>'+ data.descripcion +'</td></tr>';
+					out = out + $('#tablePerjudicados').html();
+					
+					$('#tablePerjudicados').html(out);
+				},
+			});
+	});
+</script>	
 
 <script>
 	// Si cambias Ref Cia que copie el campo en Num Ref
